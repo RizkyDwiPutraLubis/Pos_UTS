@@ -1,12 +1,13 @@
-
-
-const home = async (req,res) => {
-   try {
-        res.render('/views/index.html');
-    } catch (error) {
-       console.log(error)
+class HomeController {
+    static async home(req, res) {
+      try {
+        res.render('home', {
+            layout: false
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
-}
-module.exports = {
-    home
-}
+  }
+  
+  module.exports = HomeController;

@@ -3,8 +3,8 @@ const Users         = require("../models").Users;
 const Roles         = require("../models").Roles;
 
 
-class AdminController {
-    static async admin(req, res) {
+class PeopleController {
+    static async listUsers(req, res) {
       try {
         const refreshToken = req.cookies.refresh_token;
         const user = await Users.findOne({ where: { refresh_token: refreshToken },
@@ -15,18 +15,26 @@ class AdminController {
                 },
             ]
          });
-        console.log(user);
+         const users = await Users.findAll({
+            include: [
+                {
+                    model: Roles,
+                    attributes:['role_name']
+                },
+            ]
+         });
+        
   
         const data = {
-          data: "data"
+          users
         };
   
-        res.render('admin/', {
+        res.render('admin/people/users', {
           layout: "admin/layouts/",
           title: "Dashboard",
           user,
           data,
-          menu : "dashboard",
+          menu : "people",
           baseUrl: process.env.BASEURL
         });
       } catch (error) {
@@ -35,4 +43,4 @@ class AdminController {
     }
   }
   
-  module.exports = AdminController;
+  module.exports = PeopleController;

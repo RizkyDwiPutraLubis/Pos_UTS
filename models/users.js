@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Users.hasOne(models.Roles,{
-        foreignKey : "role_id"
-      })
+      Users.belongsTo(models.Roles, {
+        foreignKey: 'role_id' 
+      });
       
     }
   }
